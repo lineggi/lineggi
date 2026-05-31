@@ -169,12 +169,11 @@ footer{text-align:right;margin-top:30px;font-family:"SFMono-Regular",Menlo,Conso
   .trees{min-width:0;}
   .gtree{overflow:visible;}
   .tree ul{flex-direction:column;align-items:flex-start;padding-top:0;}
-  .tree li{padding:7px 0 0 0;align-items:flex-start;}
-  .tree li::before,.tree li::after{display:none;}
-  .tree ul ul{position:relative;padding-left:18px;margin-left:3px;}
-  .tree ul ul::before{content:"";display:block;position:absolute;left:0;top:-3px;bottom:16px;width:1.6px;height:auto;background:#cfcfcf;border:0;transform:none;}
-  .tree ul ul>li{padding-left:15px;position:relative;}
-  .tree ul ul>li::before{content:"";display:block;position:absolute;left:0;top:21px;width:15px;height:1.6px;background:#cfcfcf;border:0;}
+  .tree li{padding:8px 0 0 0;align-items:flex-start;}
+  .tree li::before,.tree li::after{display:none;content:none;}
+  .tree ul ul{margin-left:11px;padding-left:15px;border-left:1.6px solid #cfcfcf;}
+  .tree ul ul>li{position:relative;}
+  .tree ul ul>li::before{content:"";display:block;position:absolute;left:-15px;top:22px;width:15px;height:1.6px;background:#cfcfcf;border:0;}
   .tree>ul{padding-left:0;}
   .tree>ul>li{padding-left:0;}
   .onode{min-width:0;width:max-content;}
