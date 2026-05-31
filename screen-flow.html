@@ -127,7 +127,7 @@ footer{text-align:right;margin-top:30px;font-family:"SFMono-Regular",Menlo,Conso
 /* 버튼↔패널 사이 간격을 덮는 투명 브리지(hover 유지) */
 .navpanel::after{content:"";position:absolute;left:0;right:0;top:100%;height:18px;}
 .navwrap::before{content:"";position:absolute;right:0;bottom:100%;width:260px;height:16px;}
-.navwrap:hover .navpanel{opacity:1;transform:translateY(0);pointer-events:auto;}
+.navwrap:hover .navpanel,.navwrap.open .navpanel{opacity:1;transform:translateY(0);pointer-events:auto;}
 .navpanel .ph{font-size:10px;font-weight:800;letter-spacing:.16em;color:#999;margin-bottom:18px;text-align:center;}
 .node{display:block;border:1px solid #dcdcdc;border-radius:9px;padding:8px 10px;text-align:left;cursor:pointer;background:#fafafa;font-family:inherit;transition:.12s;}
 .node:hover{background:#fff;border-color:#111;}
@@ -145,6 +145,31 @@ footer{text-align:right;margin-top:30px;font-family:"SFMono-Regular",Menlo,Conso
 .menutab.active{background:#111;border-color:#111;}
 .menutab.active .oid{color:rgba(255,255,255,.7);}.menutab.active .mnm{color:#fff;}
 .trees{min-width:max-content;}
+
+/* ===== 모바일 최적화 ===== */
+@media (max-width:760px){
+  body{padding:18px 14px 100px;}
+  .grid{grid-template-columns:1fr;gap:28px;}
+  .phone{width:300px;margin-left:30px;}
+  .shead{flex-direction:column;gap:8px;}
+  .shead h1{font-size:21px;}
+  .shead .rt{text-align:left;}
+  .ctitle{font-size:36px;line-height:1.08;}
+  .csub{font-size:18px;}
+  .cdesc{font-size:14px;}
+  .cmeta{gap:22px;padding:18px 0;}
+  .hist{overflow-x:auto;}
+  .htable{font-size:12px;min-width:560px;}
+  .navwrap{right:14px;bottom:16px;}
+  .navbtn{padding:10px 15px;font-size:12px;}
+  .navpanel{max-width:94vw;padding:18px 16px;}
+  .menubar{gap:8px;}
+  .menutab{padding:7px 13px;}
+}
+@media (max-width:420px){
+  .phone{width:268px;margin-left:30px;}
+  .ctitle{font-size:30px;}
+}
 .onode{border:1.4px solid #cfcfcf;border-radius:8px;background:#fafafa;padding:7px 12px;min-width:104px;text-align:center;cursor:pointer;font-family:inherit;display:inline-block;}
 .onode .oid{font-family:"SFMono-Regular",Menlo,Consolas,monospace;font-size:10px;color:#999;}
 .onode .onm{font-size:12px;font-weight:700;color:#222;margin-top:1px;}
@@ -326,7 +351,11 @@ function setActive(i){
  document.getElementById('curlabel').textContent=KEYS[i];
  const g=GR[i]; if(g>=0) selectTree(g);
 }
-function showScreen(i){sections[i].scrollIntoView({behavior:'smooth',block:'start'});}
+function showScreen(i){sections[i].scrollIntoView({behavior:'smooth',block:'start'});document.querySelector('.navwrap').classList.remove('open');}
+// 모바일: 버튼 탭으로 트리 열고닫기 (hover 미지원 대응)
+const _nw=document.querySelector('.navwrap');
+document.querySelector('.navbtn').addEventListener('click',(e)=>{e.stopPropagation();_nw.classList.toggle('open');});
+document.addEventListener('click',(e)=>{if(!_nw.contains(e.target))_nw.classList.remove('open');});
 const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)setActive(sections.indexOf(e.target));});},{rootMargin:'-45% 0px -45% 0px',threshold:0});
 sections.forEach(s=>obs.observe(s));
 setActive(0);
